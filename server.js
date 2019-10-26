@@ -19,7 +19,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
-mongoose.Promise = Promise;
+// mongoose.Promise = Promise;
 
 // Init app
 var app = express();
@@ -40,13 +40,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI =
+var uristring =
   process.env.MONGODB_URI ||
-  ("mongodb://localhost/ljabids",
-  { autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true });
+  process.env.MONGOHQ_URL ||
+  "mongodb://localhost/ljabids";
+// var MONGODB_URI =
+//   process.env.MONGODB_URI ||
+//   ("mongodb://localhost/ljabids", { useNewUrlParser: true });
 
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI);
+// mongoose.connect(MONGODB_URI);
 
 app.use("/", routes);
 app.use("/articles", articles);
