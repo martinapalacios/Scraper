@@ -1,10 +1,10 @@
 // Dependencies
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var exphbs = require("express-handlebars");
-var logger = require("morgan");
-var mongoose = require("mongoose");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const exphbs = require("express-handlebars");
+const logger = require("morgan");
+const mongoose = require("mongoose");
 
 // Requiring our Note and Article models
 var Note = require("./models/Note");
@@ -39,12 +39,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI =
+  process.env.MONGODB_URI ||
+  ("mongodb://localhost/ljabids",
+  { autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true });
+
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/ljabids", {
-  autoIndex: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// mongodb: mongoose.connect(MONGODB_URI);
 
 app.use("/", routes);
 app.use("/articles", articles);
