@@ -46,7 +46,7 @@ var MONGODB_URI =
   { autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true });
 
 // Connect to the Mongo DB
-// mongodb: mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI);
 
 app.use("/", routes);
 app.use("/articles", articles);
